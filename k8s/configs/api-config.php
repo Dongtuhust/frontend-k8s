@@ -1,8 +1,8 @@
 <?php
     Class CallApi {
-    	public $product_api = "http://localhost/product_api/";
-	    public $old_product_api = "http://localhost/old_product_api/";
-	    public $users_api = "http://localhost/users_api/";
+    	public $product_api = "http://35.240.235.35:30234/";
+	    public $old_product_api = "http://35.240.235.35:30436/";
+	    public $users_api = "http://35.240.235.35/";
 	    public $payment_api;
 	    public $payment_old_api;
 

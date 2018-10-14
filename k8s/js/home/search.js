@@ -3,7 +3,8 @@ $(document).ready(function(){
         var keywords = $("#result_search").attr('data-key');
  
         // get data from the api based on search keywords
-        $.getJSON("http://localhost/product_api/product/search.php?s=" + keywords, function(data){
+        var ip = getIpProductService();
+        $.getJSON(ip+"/product/search.php?s=" + keywords, function(data){
  
             // template in products.js
             searchProductsTemplate(data, keywords);

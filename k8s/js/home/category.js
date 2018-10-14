@@ -1,12 +1,12 @@
 $(document).ready(function(){
         // get search keywords
         var keywords = $("#category").attr('data-key');
-        
-        $.getJSON("http://localhost/product_api/category/read.php", function(data){
+        var ip = getIpProductService();
+        $.getJSON(ip+"/category/read.php", function(data){
             readCategoryTemplate(data,keywords)
         });
         // get data from the api based on search keywords
-        $.getJSON("http://localhost/product_api/product/read.php", function(data){
+        $.getJSON(ip+"/product/read.php", function(data){
  
             // template in products.js
             readProductsCategoryTemplate(data, keywords);

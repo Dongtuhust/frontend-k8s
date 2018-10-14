@@ -16,19 +16,22 @@ $(document).ready(function(){
  
 function showProductsFirstPage(){
     var type = "all";
-    var json_url="http://localhost/product_api/product/readPaging.php";
+    var ip = getIpProductService();
+    var json_url=ip + "/product/readPaging.php";
     showProducts(json_url,type);
 }
 
 function showHotProduct(){
     var type= "hot";
-    var json_url="http://localhost/product_api/product/read.php";
+    var ip = getIpProductService();
+    var json_url=ip + "/product/read.php";
     showProducts(json_url,type);
 }
 
 function showNewProduct(){
     var type= "new";
-    var json_url="http://localhost/product_api/product/read.php";
+    var ip = getIpProductService();
+    var json_url=ip + "/product/read.php";
     showProducts(json_url,type);
 }
 

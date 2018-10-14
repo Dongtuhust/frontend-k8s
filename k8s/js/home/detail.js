@@ -1,9 +1,9 @@
 $(document).ready(function(){
         // get search keywords
         var keywords = $("#background-header").attr('data-key');
- 
+        var ip = getIpProductService();
         // get data from the api based on search keywords
-        $.getJSON("http://localhost/product_api/product/readOne.php?id=" + keywords, function(data){
+        $.getJSON(ip+"/product/readOne.php?id=" + keywords, function(data){
  
             // template in products.js
             readOneProductsTemplate(data, keywords);
@@ -11,7 +11,7 @@ $(document).ready(function(){
             // // chage page title
             // changePageTitle("Search products: " + keywords);
             var category = data.category_id;
-            $.getJSON("http://localhost/product_api/product/read.php", function(data_recmd){
+            $.getJSON(ip+"/product/read.php", function(data_recmd){
                 readSameProductsTeamplate(data_recmd,category);
             });
         });
