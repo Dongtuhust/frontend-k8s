@@ -1,17 +1,17 @@
 function getIpProductService(){
-	return "http://35.240.141.99:30234";
+	return "http://35.240.181.251:30234";
 }
 
 function getIpOldProductService(){
-	return "http://35.240.141.99:30436";
+	return "http://35.240.181.251:30436";
 }
 
 function getIpPaymentService(){
-	return "http://35.240.141.99:31910";
+	return "http://35.240.181.251:31910";
 }
 
 function getIpUsersService(){
-	return "http://35.240.141.99:30999";
+	return "http://35.240.181.251";
 }
 
 

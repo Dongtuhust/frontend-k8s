@@ -1,4 +1,9 @@
-<?php include "../includes/headeradmin.php" ?>
+<?php 
+include "../includes/headeradmin.php" 
+require_once __DIR__ . '/vendor/autoload.php';
+use PhpAmqpLib\Connection\AMQPConnection;
+use PhpAmqpLib\Message\AMQPMessage;
+?>
 <div class="sign-in" style="margin-bottom: 150px;">
 	<div class="row">
 		<div class="col-sm-8">
@@ -25,13 +30,13 @@
 				<div class="form-group row">
 					<label  class="col-sm-4 col-form-label">Thể loại</label>
 					<div class="col-sm-6">
-						<select  class="form-control" name="category_name">
+						<select  class="form-control" name="category">
 							<option selected>Choose...</option>
-							<option value="Bắn súng">Bắn súng</option>
-							<option value="Nhập vai">Nhập vai</option>
-							<option value="Đối kháng">Đối kháng</option>
-							<option value="Thể thao">Thể thao</option>
-							<option value="Kinh dị">Kinh dị</option>
+							<option value="1">Bắn súng</option>
+							<option value="2">Nhập vai</option>
+							<option value="3">Đối kháng</option>
+							<option value="4">Thể thao</option>
+							<option value="5">Kinh dị</option>
 						</select>
 					</div>
 				</div>
@@ -82,42 +87,19 @@
 </div>
 
 <?php 
-
 if (isset($_POST["submited"])){
 	$product_name = $_POST["product_name"];
 	$price_buy = $_POST["price_buy"];
 	$description = $_POST["description"];
-	$category_name = $_POST["category_name"];
+	$category = $_POST["category"];
 	$quantity = $_POST["quantity"];
 	$distributor = $_POST["distributor"];
 	$imgfile = $_FILES["imgfile"];
-	require_once("connectdb.php");
-	$sql = "INSERT INTO `product` (`product_id`, `product_name`, `price_buy`, `description`, `product_image`, `detail_image`, `category_id`, `distributor_name`, `quantity`)
-	VALUES (NULL, '$product_name', '$price_buy', '$description','NULL','NULL','1', '$distributor', '$quantity')";
-	$result = mysqli_query($connect,$sql);
-	$id=0;
-	switch ($category_name) {
-		case 'Bắn súng':
-		$id=1;
-		break;
-		case 'Nhập vai':
-		$id=4;
-		break;
-		case 'Đối kháng':
-		$id=3;
-		break;
-		case 'Thể thao':
-		$id=2;
-		break;
-		case 'Kinh dị':
-		$id=5;
-		break;
-		default:
-		$id=0;
-		break;
-	}
-	$sqlcategory = "update product set category_id='$id' where product_name='$product_name'";
-	$resultcategory = mysqli_query($connect,$sqlcategory);
+	$update_time = date('Y-m-d H:i:s');
+	$created_time = date('Y-m-d H:i:s');
+	$purcharse_number = 0;
+	$status = "Mới";
+	
 	if (isset($_FILES["imgfile"])) {
 		if ($_FILES["imgfile"]["error"]) {
 			echo "File bị lỗi";
@@ -135,29 +117,45 @@ if (isset($_POST["submited"])){
 		}
 	}
 
-	$sqlimg = "UPDATE `product` SET `product_image`='../image/".$_FILES['imgfile']['name']."' WHERE product_name='$product_name'";
-	$resultimg = mysqli_query($connect,$sqlimg);
-	$sqlimg = "UPDATE `product` SET `detail_image`='../image/".$dir_imgfile."' WHERE product_name='$product_name'";
-	$resultimg = mysqli_query($connect,$sqlimg);
-	if ($result){
-		?>
+	$product_image = "../image/".$_FILES['imgfile']['name'];
+	$detail_image = $dir_imgfile;
 
-		<script language="javascript">
-			alert('<?php echo "Thêm dữ liệu thành công. Nhấn \'OK\' để quay về trang ADMIN." ?>');
-		</script>
+	
+	$connection = new AMQPConnection('http://35.240.181.251', 31606, 'guest', 'guest');
+	$channel    = $connection->channel();
 
-		<?php
-		$url="admin.php";
-		echo "<meta http-equiv='refresh' content='0;url=$url' />";
-	} else {
-		?>
+	$channel->queue_declare('product_queue', false, false, false, false);
 
-		<script language="javascript">
-			alert('<?php echo "Thêm dữ liệu thất bại." ?>');
-		</script>
+	$product_item=array(
+		"name" => $product_name,
+		"description" => html_entity_decode($description),
+		"price" => $price_buy,
+		"category_id" => $category,
+		"product_image" => $product_image,
+		"detail_image" => $detail_image,
+		"distributor" => $distributor,
+		"quantity" => $quantity,
+		"status" => $status,
+		"update_time" => $update_time,
+		"created_time" => $created_time,
+		"purcharse_number" => $purcharse_number
+	);
 
-		<?php
-	}
+	$data = json_encode($products_arr);
+
+	$msg = new AMQPMessage($data, array('delivery_mode' => 2));
+
+	$channel->basic_publish($msg, '', 'product_queue');
+
+	?>
+
+	<script language="javascript">
+		alert('<?php echo "Dữ liệu đã được gửi đi đang được sử lý. Nhấn \'OK\' để quay về trang ADMIN." ?>');
+	</script>
+
+	<?php
+	$url="product_management.php";
+	echo "<meta http-equiv='refresh' content='0;url=$url' />";
 }
 ?>
 <?php include "../includes/footer.php" ?>
