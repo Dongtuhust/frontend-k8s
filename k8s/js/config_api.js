@@ -1,17 +1,17 @@
 function getIpProductService(){
-	return "http://35.240.181.251:30234";
+	return "localhost:30234";
 }
 
 function getIpOldProductService(){
-	return "http://35.240.181.251:30436";
+	return "localhost:30436";
 }
 
 function getIpPaymentService(){
-	return "http://35.240.181.251:31910";
+	return "localhost:31910";
 }
 
 function getIpUsersService(){
-	return "http://35.240.181.251";
+	return "localhost";
 }
 
 

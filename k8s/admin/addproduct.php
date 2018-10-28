@@ -1,8 +1,5 @@
 <?php 
-include "../includes/headeradmin.php" 
-require_once __DIR__ . '/vendor/autoload.php';
-use PhpAmqpLib\Connection\AMQPConnection;
-use PhpAmqpLib\Message\AMQPMessage;
+include "../includes/headeradmin.php"; 
 ?>
 <div class="sign-in" style="margin-bottom: 150px;">
 	<div class="row">
@@ -87,6 +84,9 @@ use PhpAmqpLib\Message\AMQPMessage;
 </div>
 
 <?php 
+require_once __DIR__ .'/vendor/autoload.php';
+use PhpAmqpLib\Connection\AMQPConnection;
+use PhpAmqpLib\Message\AMQPMessage;
 if (isset($_POST["submited"])){
 	$product_name = $_POST["product_name"];
 	$price_buy = $_POST["price_buy"];
@@ -99,7 +99,7 @@ if (isset($_POST["submited"])){
 	$created_time = date('Y-m-d H:i:s');
 	$purcharse_number = 0;
 	$status = "Mới";
-	
+
 	if (isset($_FILES["imgfile"])) {
 		if ($_FILES["imgfile"]["error"]) {
 			echo "File bị lỗi";
@@ -108,6 +108,7 @@ if (isset($_POST["submited"])){
 		}
 
 	}
+
 	$dir_imgfile = substr($_FILES['imgfile']['name'],0,-4);
 	mkdir("../image/".$dir_imgfile);
 	$count = count($_FILES["imgfile_detail"]["name"]);
@@ -118,13 +119,8 @@ if (isset($_POST["submited"])){
 	}
 
 	$product_image = "../image/".$_FILES['imgfile']['name'];
+
 	$detail_image = $dir_imgfile;
-
-	
-	$connection = new AMQPConnection('http://35.240.181.251', 31606, 'guest', 'guest');
-	$channel    = $connection->channel();
-
-	$channel->queue_declare('product_queue', false, false, false, false);
 
 	$product_item=array(
 		"name" => $product_name,
@@ -141,7 +137,14 @@ if (isset($_POST["submited"])){
 		"purcharse_number" => $purcharse_number
 	);
 
-	$data = json_encode($products_arr);
+	$data = json_encode($product_item);
+	echo $data;
+
+	$connection = new AMQPConnection('localhost', 31234, 'guest', 'guest');
+	$channel    = $connection->channel();
+
+	$channel->queue_declare('product_queue', false, false, false, false);
+
 
 	$msg = new AMQPMessage($data, array('delivery_mode' => 2));
 
