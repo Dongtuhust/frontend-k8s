@@ -1,5 +1,10 @@
-<?php 
-include "../includes/headeradmin.php"; 
+<?php
+session_start(); 
+if (!isset($_SESSION['user_id'])) {
+	echo "Bạn cần đăng nhập để truy cập trang này";
+}elseif (isset($_SESSION['user_id']) && $_SESSION["permision"] == 1) { 
+include "../includes/headeradmin.php";
+include_once '../configs/api-config.php'; 
 ?>
 <div class="sign-in" style="margin-bottom: 150px;">
 	<div class="row">
@@ -82,8 +87,9 @@ include "../includes/headeradmin.php";
 		</div>
 	</div>
 </div>
-
+<?php include "../includes/footer.php"; ?>
 <?php 
+}
 require_once __DIR__ .'/vendor/autoload.php';
 use PhpAmqpLib\Connection\AMQPConnection;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -97,7 +103,7 @@ if (isset($_POST["submited"])){
 	$imgfile = $_FILES["imgfile"];
 	$update_time = date('Y-m-d H:i:s');
 	$created_time = date('Y-m-d H:i:s');
-	$purcharse_number = 0;
+	$purcharse_number = "0";
 	$status = "Mới";
 
 	if (isset($_FILES["imgfile"])) {
@@ -120,7 +126,7 @@ if (isset($_POST["submited"])){
 
 	$product_image = "../image/".$_FILES['imgfile']['name'];
 
-	$detail_image = $dir_imgfile;
+	$detail_image = "../image/".$dir_imgfile;
 
 	$product_item=array(
 		"name" => $product_name,
@@ -138,9 +144,8 @@ if (isset($_POST["submited"])){
 	);
 
 	$data = json_encode($product_item);
-	echo $data;
 
-	$connection = new AMQPConnection('localhost', 31234, 'guest', 'guest');
+	$connection = new AMQPConnection('35.185.178.104', 31234, 'guest', 'guest');
 	$channel    = $connection->channel();
 
 	$channel->queue_declare('product_queue', false, false, false, false);
@@ -149,7 +154,6 @@ if (isset($_POST["submited"])){
 	$msg = new AMQPMessage($data, array('delivery_mode' => 2));
 
 	$channel->basic_publish($msg, '', 'product_queue');
-
 	?>
 
 	<script language="javascript">
@@ -161,4 +165,3 @@ if (isset($_POST["submited"])){
 	echo "<meta http-equiv='refresh' content='0;url=$url' />";
 }
 ?>
-<?php include "../includes/footer.php" ?>

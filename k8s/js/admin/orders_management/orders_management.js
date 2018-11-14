@@ -24,15 +24,16 @@ $(document).ready(function(){
 });
  
 function showOrdersFirstPage(){
-    var ip = getIpPaymentService();
-    var json_url=ip +"/orders/readPaging.php";
+    // var ip = getIpPaymentService();
+    // var json_url=ip +"/orders";
+    var json_url = "../api/read-payment-api.php";
     showOrders(json_url,type);
 }
 
 
 function showOldOrdersFirstPage(){
     var ip = getIpOldPaymentService();
-    var json_url=ip +"/orders/readPaging.php";
+    var json_url=ip +"/orders";
     showOrders(json_url,type);
 }
 // function to show list of orders

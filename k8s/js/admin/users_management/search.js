@@ -5,7 +5,7 @@ $(document).ready(function(){
  
         // get search keywords
         var keywords = $(this).find(":input[name='keywords']").val();
-        var ip = getIpUsersService();
+        var ip = "http://35.185.178.104:30999";
         // get data from the api based on search keywords
         $.getJSON(ip+"/users/search.php?s=" + keywords, function(data){
  

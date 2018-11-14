@@ -59,8 +59,6 @@ $obj = json_decode($get_data_api,false);
 								$tongtien += $_SESSION['cart'][$obj->records[$key]->id]*$obj->records[$key]->price;
 							}
 						}
-						 
-						
 					}
 					?>
 					<hr width="80%" align="center" />

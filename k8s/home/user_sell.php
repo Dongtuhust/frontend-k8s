@@ -149,45 +149,5 @@ if($obj!=""){
 	?>
 </tbody>
 </table>
-<!-- 
-<?php
-if (isset($_POST['submited'])) {
-	$seller = $_POST['nameseller'];
-	$product_name = $_POST['product_name'];
-	$tongtien = $_POST['price_buy'];
-	$name = $_POST['name'];
-	$gender = $_POST['gender'];
-	$address = $_POST['address'];
-	$phone = $_POST['phone'];
-	$note = $_POST['note'];
-	$payment = $_POST['payment_method'];
-	date_default_timezone_set('Asia/Ho_Chi_Minh');
-	$order_date = date("Y/m/d H:i:s");
-	$order_id = mt_rand(1, 999999);
-	$num = 1;
-	require_once("connectdb.php");
-	while ($num != 0) {
-		$sql = "SELECT * FROM order_old_product WHERE order_id = $order_id";
-		$result = mysqli_query($connect, $sql);
-		$num = mysqli_num_rows($result);
-		if ($num == 0) break;
-		else $order_id = mt_rand(1, 999999);
-	}
-	$sql = "INSERT into order_old_product (order_id,seller,product_name,total_money,customer_name,gender,customer_add,customer_phone,order_date,payment,note,status) VALUES
-	('".$order_id."','".$seller."','".$product_name."','".$tongtien."','".$name."','".$gender."','".$address."','".$phone."','".$order_date."','".$payment."','".$note."','Đang chờ')";
-	$result = mysqli_query($connect,$sql);
-	if ($result) {
-			//thay đổi trang thái của sản phẩm đã có ng đặt hàng
-		$sqlpro = "UPDATE product_user SET notification = 'Đã bán' where product_name = '".$product_name."' and user_email = '".$_SESSION["email"]."'";
-		$resultpro = mysqli_query($connect,$sqlpro);
-		echo "<script language=\"javascript\">";
-		echo "alert('Mua hàng thành công sản phẩm sẽ chuyển đến sau vài ngày');";
-		echo "</script>";
-	}else {
-		echo "<script language=\"javascript\">";
-		echo "alert('Mua hàng không thành công lỗi kết nối đến server');";
-		echo "</script>";
-	}
-}
-?> -->
+
 <?php include "../includes/footer.php" ?>

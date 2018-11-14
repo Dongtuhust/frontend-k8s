@@ -89,11 +89,33 @@ if (isset($_POST["btn_submit"])) {
 				echo '</script>';
 			}else{
 				unset($_SESSION['cart']);
+			
 				echo '<script language="javascript">';
 				echo 'alert("Đăng nhập thành công")';
 				echo '</script>';
 				if ($_SESSION['permision'] == "1") {
 					$url="../admin/product_management.php";
+					// Get access token authentication
+					$param = array(
+					    'credential_id' => 'b7789add-5cc7-4b66-bee5-790ed3316858',
+					    'token_type' => 'bearer',
+					    'expires_in' => '3600'
+					);
+					
+					$url_token = 'http://35.185.178.104:30802/oauth2_tokens';
+					 
+					$options = array(
+					        'http' => array(
+					        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+					        'method'  => 'POST',
+					        'content' => http_build_query($param),
+					    )
+					);
+
+					$context  = stream_context_create($options);
+					$result = file_get_contents($url_token, false, $context);
+					$response = json_decode($result,false);
+					$_SESSION["token"] = $response->access_token;
 				}
 				else{ $url="index.php";}
 				echo "<meta http-equiv='refresh' content='0;url=$url' />";

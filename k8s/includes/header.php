@@ -18,9 +18,11 @@ $obj = json_decode($get_data_api,false);
 	<link rel="stylesheet" type="text/css" href="../css/index.css"/>
 	<link rel="stylesheet" type="text/css" href="../css/footer.css"/>
 	<link rel="stylesheet" type="text/css" href="../css/bootstrap.css"/ >
+
+	<script src="../js/jquery-3.3.1.min.js"></script>
 	<link href="http://fonts.googleapis.com/css?family=Ruge+Boogie" rel="stylesheet" type="text/css">
 	<script src="../js/fontawesome-all.js" type="text/javascript" charset="utf-8" async defer></script>
-	<script src="../js/jquery-3.3.1.min.js"></script>
+	
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="../js/style.js"></script>
 </head>

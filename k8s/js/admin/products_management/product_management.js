@@ -24,21 +24,22 @@ $(document).ready(function(){
 });
  
 function showProductsFirstPage(){
-    var ip = getIpProductService();
-    var json_url=ip + "/product/readPaging.php";
+    // var ip = getIpProductService();
+    // var json_url=ip + "/admin-product";
+    var json_url = "../api/read-product-api.php";
     showProducts(json_url,type);
 }
 
 
 function showOldProductsFirstPage(){
-    var ip = getIpOldProductService();
-    var json_url=ip +"/product/readPaging.php";
+    // var ip = getIpOldProductService();
+    // var json_url=ip +"/admin-oldproduct";
+    var json_url = "../api/read-old-product-api.php";
     showProducts(json_url,type);
 }
 // function to show list of products
 function showProducts(json_url,type){
- 
-    // get list of products from the API
+
     $.getJSON(json_url, function(data){
  
         // html for listing products

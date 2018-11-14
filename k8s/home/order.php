@@ -118,8 +118,11 @@
 	</div> <!-- #content -->
 </div> <!-- .container -->
 <?php
+require_once __DIR__ .'/vendor/autoload.php';
+use PhpAmqpLib\Connection\AMQPConnection;
+use PhpAmqpLib\Message\AMQPMessage;
 if (isset($_POST['order-submit'])) {
-	$name = $_POST['name'];
+	$customer_name = $_POST['name'];
 	$gender = $_POST['gender'];
 	$address = $_POST['address'];
 	$phone = $_POST['phone'];
@@ -128,57 +131,72 @@ if (isset($_POST['order-submit'])) {
 	date_default_timezone_set('Asia/Ho_Chi_Minh');
 	$order_date = date("Y/m/d H:i:s");
 	$order_id = mt_rand(1, 999999);
-	$num = 1;
-	require_once("connectdb.php");
-	while ($num != 0) {
-		$sql = "SELECT * FROM order_customer WHERE order_id = $order_id";
-		$result = mysqli_query($connect, $sql);
-		$num = mysqli_num_rows($result);
-		if ($num == 0) break;
-		else $order_id = mt_rand(1, 999999);
-	}
+	
 	if ($tongtien==0) {
 		echo "<script language=\"javascript\">";
 		echo "alert('Bạn chưa mua sản phẩm nào');";
 		echo "</script>";
 	}else{
-		$sql = "INSERT into order_customer (order_id,customer_name,customer_add,customer_phone,total_money,order_date,payment,gender,note,status) VALUES
-		('".$order_id."','".$name."','".$address."','".$phone."','".$tongtien."','".$order_date."','".$payment."','".$gender."','".$note."','Đang chờ')";
-		echo $sql;
-		$result = mysqli_query($connect,$sql);
-		if ($result) {
-			//giảm số lượng sản phẩm trong csdl
+		$order_item=array(
+			"order_id" => $order_id,
+			"total_money" => $tongtien,
+			"customer_name" => $customer_name,
+			"gender" => $gender,
+			"address" => $address,
+			"phone" => $phone,
+			"note" => $note,
+			"payment" => $payment,
+			"order_date" => $order_date
+		);
+
+		
+
+		$connection = new AMQPConnection('35.185.178.104', 31234, 'guest', 'guest');
+		$channel    = $connection->channel();
+
+		$data = json_encode($order_item);
+
+		$channel->queue_declare('order_queue', false, false, false, false);
+
+
+		$msg = new AMQPMessage($data, array('delivery_mode' => 2));
+
+		$channel->basic_publish($msg, '', 'order_queue');
+
+		// public cart to rabbitmq
+
+		foreach ($obj->records as $key => $value) {
 			foreach ($_SESSION['cart'] as $id => $soluong) {
-				$arr[] = "'".$id."'";
+				if ($id==$obj->records[$key]->id) {
+					$cart_item=array(
+						"product_id" => $id,
+						"name" => $obj->records[$key]->name,
+						"quantity" => $_SESSION['cart'][$id]
+					);
+
+					$data = json_encode($cart_item);
+
+					$channel->queue_declare('cart_queue', false, false, false, false);
+
+
+					$msg = new AMQPMessage($data, array('delivery_mode' => 2));
+
+					$channel->basic_publish($msg, '', 'cart_queue');
+				}
 			}
-			$str = implode(",",$arr);
-			$sql = "Select * from product where product_id in ($str)";
-			$result = mysqli_query($connect,$sql);
-			while ($row = mysqli_fetch_array ($result)) {
-				//giảm số lượng sản phâm đã bán trong csdl
-				$newquantity = $row["quantity"] - $_SESSION['cart'][$row["product_id"]];
-				$sqlpro = "UPDATE product SET quantity = $newquantity where product_id = '".$row['product_id']."'";
-				$resultpro = mysqli_query($connect,$sqlpro);
-				//tăng số lượng mua
-				$newpurcharse = $row["purcharse_number"] + $_SESSION['cart'][$row["product_id"]];
-				$sqladd = "UPDATE product SET purcharse_number = $newpurcharse where product_id = '".$row['product_id']."'";
-				$resultadd = mysqli_query($connect,$sqladd);
-				//thêm vào bảng order_product quản lý các sản phẩm mua của khách hàng
-				$sql_order = "INSERT into order_product (order_id,product_name,username,quantity) VALUES
-				('".$order_id."','".$row["product_name"]."','".$name."','".$_SESSION['cart'][$row["product_id"]]."')";
-				$result_order = mysqli_query($connect,$sql_order);
-			}
+
+		}
 			echo "<script language=\"javascript\">";
 			echo "alert('Mua hàng thành công sản phẩm sẽ chuyển đến sau vài ngày');";
 			echo "</script>";
 			unset($_SESSION['cart']);
 			$url="index.php";
 			echo "<meta http-equiv='refresh' content='0;url=$url' />";
-		}else {
-			echo "<script language=\"javascript\">";
-			echo "alert('Mua hàng không thành công lỗi kết nối đến server');";
-			echo "</script>";
-		}
+		// }else {
+		// 	echo "<script language=\"javascript\">";
+		// 	echo "alert('Mua hàng không thành công lỗi kết nối đến server');";
+		// 	echo "</script>";
+		// }
 	}
 }
 ?>

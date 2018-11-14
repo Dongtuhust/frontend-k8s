@@ -1,4 +1,7 @@
-<?php include "../includes/headeradmin.php" ?>
+<?php 
+session_start(); 
+if (isset($_SESSION['user_id']) && $_SESSION["permision"] == 1) {
+include "../includes/headeradmin.php"; ?>
 
 <div class="container" style="margin-top: -90px;">
 	<div id="app"></div>
@@ -16,4 +19,8 @@
 <script src="../js/admin/orders_management/search.js"></script>
 <script src="../js/admin/orders_management/orders_template.js"></script>
 <script src="../js/admin/orders_management/update_order.js"></script>
-<?php include "../includes/footer.php" ?>
+<?php include "../includes/footer.php"; 
+}else {
+	echo "Bạn cần đăng nhập để truy cập trang này";
+}
+?>

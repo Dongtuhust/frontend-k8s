@@ -11,7 +11,6 @@ session_start();
 	<link rel="stylesheet" type="text/css" href="../css/index.css"/>
 	<link rel="stylesheet" type="text/css" href="../css/bootstrap.css"/ >
 	<script src="../js/fontawesome-all.js" type="text/javascript" charset="utf-8" async defer></script>
-	<script src="../js/style.js"></script>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<script src="../js/jquery-3.3.1.min.js"></script>
@@ -50,8 +49,8 @@ session_start();
 						<?php
 					} else {
 						?>
-						<a href="signup.php"><button type="button" class="btn btn-outline-dark">Đăng ký</button></a>
-						<a href="login.php"><button type="button" class="btn btn-outline-warning">Đăng nhập</button></a>
+						<a href="../home/signup.php"><button type="button" class="btn btn-outline-dark">Đăng ký</button></a>
+						<a href="../home/login.php"><button type="button" class="btn btn-outline-warning">Đăng nhập</button></a>
 						<?php
 					}
 					?>

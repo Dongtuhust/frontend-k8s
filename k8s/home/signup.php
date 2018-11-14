@@ -1,8 +1,6 @@
 
 <?php include "../includes/header.php" ?>
-<?php require_once("connectdb.php");
 $email='';$usename='';$city='';$phone='';$error='';
-
 ?>
 <div class="sign-in">
 	<div class="row">

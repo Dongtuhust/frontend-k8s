@@ -1,20 +1,20 @@
 function getIpProductService(){
-	return "localhost:30234";
+	return "http://35.185.178.104:32551";
 }
 
 function getIpOldProductService(){
-	return "localhost:30436";
+	return "http://35.185.178.104:32551";
 }
 
 function getIpPaymentService(){
-	return "localhost:31910";
+	return "http://35.185.178.104:32551";
 }
 
 function getIpUsersService(){
-	return "localhost";
+	return "http://35.185.178.104:32551";
 }
 
 
 function getIpOldPaymentService(){
-	return "http://localhost/payment_oldpro_api";
+	return "http://35.185.178.104:32551/payment_oldpro_api";
 }

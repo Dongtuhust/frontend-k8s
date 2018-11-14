@@ -15,8 +15,9 @@ $(document).ready(function(){
 });
  
 function showUsersFirstPage(){
-    var ip = getIpUsersService();
-    var json_url= ip + "/users/readPaging.php";
+    // var ip = getIpUsersService();
+    // var json_url= ip + "/admin-users";
+    var json_url = "../api/read-user-api.php";
     showUsers(json_url);
 }
 
