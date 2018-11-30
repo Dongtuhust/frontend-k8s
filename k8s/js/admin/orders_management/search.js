@@ -2,10 +2,10 @@ $(document).ready(function(){
     var ip = getIpPaymentService();
     // when a 'search orders' button was clicked
     $(document).on('submit', '#search-order-form', function(){
-        
+        ip = getIp();
         // get search keywords
         var keywords = $(this).find(":input[name='keywords']").val();
-        ip = "http://35.185.178.104:31910";
+        ip += ":31910";
         // get data from the api based on search keywords
         $.getJSON(ip+"/orders/search.php?s=" + keywords, function(data){
  

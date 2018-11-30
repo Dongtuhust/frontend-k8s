@@ -90,6 +90,7 @@ include_once '../configs/api-config.php';
 <?php include "../includes/footer.php"; ?>
 <?php 
 }
+include_once '../configs/api-config.php';
 require_once __DIR__ .'/vendor/autoload.php';
 use PhpAmqpLib\Connection\AMQPConnection;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -145,7 +146,9 @@ if (isset($_POST["submited"])){
 
 	$data = json_encode($product_item);
 
-	$connection = new AMQPConnection('35.185.178.104', 31234, 'guest', 'guest');
+	$callApi = new CallApi();
+	$rabbitmqIP = $callApi->getKongIP();
+	$connection = new AMQPConnection($rabbitmqIP, 31234, 'guest', 'guest');
 	$channel    = $connection->channel();
 
 	$channel->queue_declare('product_queue', false, false, false, false);

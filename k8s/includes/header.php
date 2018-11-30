@@ -3,7 +3,7 @@ session_start();
 $tongtien = 0;
 include_once '../configs/api-config.php';
 $callApi = new CallApi();
-$api = $callApi->getProductApi();
+$api = $callApi->getApi();
 $api .= "product/read.php";
 $get_data_api = file_get_contents($api);
 $obj = json_decode($get_data_api,false);
@@ -22,7 +22,7 @@ $obj = json_decode($get_data_api,false);
 	<script src="../js/jquery-3.3.1.min.js"></script>
 	<link href="http://fonts.googleapis.com/css?family=Ruge+Boogie" rel="stylesheet" type="text/css">
 	<script src="../js/fontawesome-all.js" type="text/javascript" charset="utf-8" async defer></script>
-	
+	<script src="../js/config_api.js"></script>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="../js/style.js"></script>
 </head>
@@ -65,10 +65,10 @@ $obj = json_decode($get_data_api,false);
 								Người dùng
 							</a>
 							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-								<a class="dropdown-item" href="myproduct.php?id=<?=$_SESSION["user_id"]?>">Sản phẩm của tôi</a>
-								<a class="dropdown-item" href="sellproduct.php?email=<?=$_SESSION["email"]?>">Đăng bán</a>
+								<a class="dropdown-item" href="myproduct.php">Sản phẩm của tôi</a>
+								<a class="dropdown-item" href="sellproduct.php">Đăng bán</a>
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="acount.php">Đổi mật khẩu</a>
+								<a class="dropdown-item" href="change_passwd.php">Đổi mật khẩu</a>
 							</div>
 						</li>
 						<?php

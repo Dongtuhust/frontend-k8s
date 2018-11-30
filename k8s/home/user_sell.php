@@ -21,14 +21,14 @@
 include_once '../configs/api-config.php';
 $callApi = new CallApi();
 //call product api
-$api = $callApi->getOldProductApi();
+$api = $callApi->getApi();
 $api .= "product/read.php";
 
 $products_data_api = file_get_contents($api);
 $obj = json_decode($products_data_api,false);
 
 // call user api
-$users_api = $callApi->getUsersApi();
+$users_api = $callApi->getApi();
 $users_api .= "users/read.php";
 
 $users_data_api = file_get_contents($users_api);

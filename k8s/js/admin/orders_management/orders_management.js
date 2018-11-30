@@ -32,8 +32,7 @@ function showOrdersFirstPage(){
 
 
 function showOldOrdersFirstPage(){
-    var ip = getIpOldPaymentService();
-    var json_url=ip +"/orders";
+    var json_url = "../api/read-payment-old-api.php";
     showOrders(json_url,type);
 }
 // function to show list of orders

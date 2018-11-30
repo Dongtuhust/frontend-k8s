@@ -1,6 +1,9 @@
 <?php
-	session_start(); 
-	$url = 'http://35.185.178.104:32551/admin-users';
+	include_once '../configs/api-config.php';
+	$callApi = new CallApi();
+	session_start();
+	$url = $callApi->getApi();
+	$url .= 'admin-users';
 	$ch = curl_init();
 
 	$headers = array('Authorization: Bearer '.$_SESSION["token"]);

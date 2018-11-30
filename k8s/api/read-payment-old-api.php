@@ -1,9 +1,9 @@
 <?php
 	include_once '../configs/api-config.php';
 	$callApi = new CallApi();
-	session_start(); 
+	session_start();
 	$url = $callApi->getApi();
-	$url .= 'admin-oldproduct';
+	$url .= 'order_old';
 	$ch = curl_init();
 
 	$headers = array('Authorization: Bearer '.$_SESSION["token"]);

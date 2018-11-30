@@ -11,7 +11,7 @@ if (!isset($_SESSION['cart'][$id])) {
 }
 
 $callApi = new CallApi();
-$api = $callApi->getProductApi();
+$api = $callApi->getApi();
 $api .= "product/read.php";
 
 $get_data_api = file_get_contents($api);

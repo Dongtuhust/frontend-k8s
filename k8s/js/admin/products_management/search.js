@@ -2,10 +2,10 @@ $(document).ready(function(){
     var ip = getIpProductService();
     // when a 'search products' button was clicked
     $(document).on('submit', '#search-product-form', function(){
- 
+        ip = getIp();
         // get search keywords
         var keywords = $(this).find(":input[name='keywords']").val();
-        ip = "http://35.185.178.104:30234";
+        ip += ":30234";
         // get data from the api based on search keywords
         $.getJSON(ip+"/product/search.php?s=" + keywords, function(data){
  

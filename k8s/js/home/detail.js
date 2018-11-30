@@ -1,7 +1,8 @@
 $(document).ready(function(){
         // get search keywords
         var keywords = $("#background-header").attr('data-key');
-        var ip = "http://35.185.178.104:30234";
+        var ip = getIp();
+        ip += ":30234";
         // get data from the api based on search keywords
         $.getJSON(ip+"/product/readOne.php?id=" + keywords, function(data){
  

@@ -48,7 +48,7 @@ include_once '../configs/api-config.php';
 $callApi = new CallApi();
 
 // call user api
-$users_api = $callApi->getUsersApi();
+$users_api = $callApi->getApi();
 $users_api .= "users/read.php";
 
 $users_data_api = file_get_contents($users_api);
@@ -101,8 +101,9 @@ if (isset($_POST["btn_submit"])) {
 					    'token_type' => 'bearer',
 					    'expires_in' => '3600'
 					);
-					
-					$url_token = 'http://35.185.178.104:30802/oauth2_tokens';
+					$url_token = 'http://'.$callApi->getKongIP();
+					$url_token .= ':30802/oauth2_tokens';
+					// $url_token = 'http://35.198.247.32:30802/oauth2_tokens';
 					 
 					$options = array(
 					        'http' => array(

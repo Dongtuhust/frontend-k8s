@@ -8,7 +8,7 @@ session_start();
 // );
  
 // // URL có chứa hai thông tin name và diachi
-// $url = 'http://35.185.178.104:30802/oauth2_tokens';
+// $url = 'http://35.198.247.32:30802/oauth2_tokens';
  
 // $options = array(
 //         'http' => array(
@@ -24,7 +24,7 @@ session_start();
 // $_SESSION["token"] = $response->access_token;
 // echo $_SESSION["token"];
 
-$url = 'http://35.185.178.104:32551/admin-product';
+$url = 'http://35.198.247.32:32551/admin-product';
 $ch = curl_init();
 
 $headers = array('Authorization: Bearer '.$_SESSION["token"]);

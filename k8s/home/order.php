@@ -118,6 +118,7 @@
 	</div> <!-- #content -->
 </div> <!-- .container -->
 <?php
+include_once '../configs/api-config.php';
 require_once __DIR__ .'/vendor/autoload.php';
 use PhpAmqpLib\Connection\AMQPConnection;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -149,9 +150,10 @@ if (isset($_POST['order-submit'])) {
 			"order_date" => $order_date
 		);
 
-		
+		$callApi = new CallApi();
+		$rabbitmqIP = $callApi->getKongIP();
 
-		$connection = new AMQPConnection('35.185.178.104', 31234, 'guest', 'guest');
+		$connection = new AMQPConnection($rabbitmqIP, 31234, 'guest', 'guest');
 		$channel    = $connection->channel();
 
 		$data = json_encode($order_item);
