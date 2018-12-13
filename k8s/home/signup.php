@@ -8,7 +8,7 @@ $email='';$usename='';$city='';$phone='';$error='';
 
 			<h2>Đăng ký</h2>
 			<form action="signup.php" method="post">
-			<div id="alert" class="alert alert-danger" style="display:none"></div>
+				<div id="alert" class="alert alert-danger" style="display:none"></div>
 				<div class="form-row">
 					<div class="form-group col-md-6">
 						<label for="inputEmail4">Email</label>
@@ -68,17 +68,17 @@ $email='';$usename='';$city='';$phone='';$error='';
 		var button = document.getElementById("submit");
 		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.onreadystatechange = function() {
-		    if (this.readyState == 4 && this.status == 200) {
-						box.style.display = 'block';
-						box.innerHTML = this.responseText;
-						button.disabled = true;
-					}else{
-						box.style.display = 'none';
-						button.disabled = false;
-					}
+			if (this.readyState == 4 && this.status == 200) {
+				box.style.display = 'block';
+				box.innerHTML = this.responseText;
+				button.disabled = true;
+			}else{
+				box.style.display = 'none';
+				button.disabled = false;
+			}
 
 
-				console.log(this.status);
+			console.log(this.status);
 		};
 		xmlhttp.open("GET", "checkuser.php?username=" + username + "&email=" + email, true);
 		xmlhttp.send();
@@ -101,7 +101,7 @@ $email='';$usename='';$city='';$phone='';$error='';
 </script>
 <?php include "../includes/footer.php" ?>
 <?php
-
+include_once '../configs/api-config.php';
 if (isset($_POST["btn_submit"])) {
 		//lấy thông tin từ các form bằng phương thức POST
 	$username = $_POST["username"];
@@ -112,6 +112,20 @@ if (isset($_POST["btn_submit"])) {
 	$phone= $_POST["phone"];
 	$email = $_POST["email"];
 	$passAdmin = $_POST["passAdmin"];
+	$created_time = date('Y-m-d H:i:s');
+
+	$user_item=array(
+		"username" => $username,
+		"password1" => $password1,
+		"password2" => $password2,
+		"city" => $city,
+		"street" => $street,
+		"phone" => $phone,
+		"email" => $email,
+		"created_time" => $created_time
+	);
+
+	$data = json_encode($user_item);
 		//Kiểm tra điều kiện bắt buộc đối với các field không được bỏ trống
 	if ($password1!=$password2) {
 		echo '<script language="javascript">';
@@ -127,16 +141,26 @@ if (isset($_POST["btn_submit"])) {
 		}else{
 
 			if ($passAdmin=="") {
-				$sql = "INSERT INTO users(username, password, address, email, createdate,phone,permision) VALUES ( '$username', '$password1', '$city', '$email', now(),'$phone','0')";
-			// thực thi câu $sql với biến connect lấy từ file connection.php
-				mysqli_query($connect,$sql);
+				$callApi = new CallApi();
+				$url = $callApi->getApi().'create-user';
+				$ch=curl_init($url);
+				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+				curl_setopt($ch, CURLOPT_POSTFIELDS, array("customer"=>$data));
+				curl_setopt($ch, CURLOPT_HEADER, true);
+				curl_setopt($ch, CURLOPT_HTTPHEADER,
+					array('Content-Type:application/json',
+						'Content-Length: ' . strlen($data_string))
+				);
+
+				$result = curl_exec($ch);
+				curl_close($ch);
 
 				echo '<script language="javascript">';
-				echo 'alert("chúc mừng bạn đã đăng ký thành công")';
+				echo 'alert("Bạn đã đăng ký thành công")';
 				echo '</script>';
 				$url="login.php";
 				echo "<meta http-equiv='refresh' content='0;url=$url' />";
-			}elseif ($passAdmin!="admin123") {
+			}elseif ($passAdmin!="admin") {
 				echo '<script language="javascript">';
 				echo 'alert("bạn muốn tạo tài khoản nhà quản trị yêu cầu nhập đúng passAdmin")';
 				echo '</script>';

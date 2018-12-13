@@ -3,7 +3,7 @@
 	$callApi = new CallApi();
 	session_start();
 	$url = $callApi->getApi();
-	$url .= 'order';
+	$url .= 'admin-orders';
 	$ch = curl_init();
 
 	$headers = array('Authorization: Bearer '.$_SESSION["token"]);

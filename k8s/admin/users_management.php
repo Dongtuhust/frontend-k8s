@@ -24,3 +24,28 @@ if (isset($_SESSION['user_id']) && $_SESSION["permision"] == 1) {
 	echo "Bạn cần đăng nhập để truy cập trang này";
 }
 ?>
+<?php 
+	if (isset($_POST["del-user"])) {
+		$user_id = $_POST["user_id"];
+		$sql = "update users set is_block ='1' where user_id='$user_id'";
+		$result = mysqli_query($connect,$sql);
+		if ($result){
+		?>
+
+		<script language="javascript">
+			alert('<?php echo "Khóa tài khoản thành công. Nhấn \'OK\' để quay về trang ADMIN." ?>');
+		</script>
+		<?php
+		$url="user.php";
+		echo "<meta http-equiv='refresh' content='0;url=$url' />";
+	} else {
+		?>
+
+		<script language="javascript">
+			alert('<?php echo "Khóa tài khoản thất bại." ?>');
+		</script>
+
+		<?php
+	}
+	}
+?>

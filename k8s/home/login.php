@@ -97,13 +97,12 @@ if (isset($_POST["btn_submit"])) {
 					$url="../admin/product_management.php";
 					// Get access token authentication
 					$param = array(
-					    'credential_id' => 'b7789add-5cc7-4b66-bee5-790ed3316858',
+					    'credential_id' => 'b59a23b4-d2a7-49be-bd1c-ed227b8ee642',
 					    'token_type' => 'bearer',
 					    'expires_in' => '3600'
 					);
-					$url_token = 'http://'.$callApi->getKongIP();
-					$url_token .= ':30802/oauth2_tokens';
-					// $url_token = 'http://35.198.247.32:30802/oauth2_tokens';
+					$url_token = $callApi->getKongIP();
+					$url_token .= ':31662/oauth2_tokens';
 					 
 					$options = array(
 					        'http' => array(

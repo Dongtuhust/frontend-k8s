@@ -88,8 +88,8 @@ function readOrdersTemplate(data, keywords){
                                             read_orders_html+="</div>";
                                             read_orders_html+="<div class='modal-footer'>";
                                                 read_orders_html+="<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>";
-                                                read_orders_html+="<button type='submit' data-id='"+val.order_id+"' name='submited' class='btn btn-primary update-order-button'>Xác nhận giao hàng</button>";
-                                                read_orders_html+="<button type='submit' data-id='"+val.order_id+"' name='submited' class='btn btn-danger delete-order-button'>Hủy đơn hàng</button>";
+                                                read_orders_html+="<button type='submit' data-id='"+val.order_id+"' name='neworder' class='btn btn-primary update-order-button'>Xác nhận giao hàng</button>";
+                                                read_orders_html+="<button type='submit' data-id='"+val.order_id+"' name='delneworder' class='btn btn-danger delete-order-button'>Hủy đơn hàng</button>";
                                             read_orders_html+="</div>";
                                         read_orders_html+="</form>";
                                     read_orders_html+="</div>";
@@ -161,10 +161,8 @@ function readOldOrdersTemplate(data, keywords){
                 read_orders_html+="<tr>";
                     read_orders_html+="<th scope='col'>Mã đơn hàng</th>";
                     read_orders_html+="<th scope='col'>Người bán</th>";
-                    read_orders_html+="<th scope='col'>Mặt hàng</th>";
-                    read_orders_html+="<th scope='col'>Tổng tiền</th>";
                     read_orders_html+="<th scope='col'>Người mua</th>";
-                    read_orders_html+="<th scope='col'>Giới tính</th>";
+                    read_orders_html+="<th scope='col'>Tổng tiền</th>";
                     read_orders_html+="<th scope='col'>Địa chỉ</th>";
                     read_orders_html+="<th scope='col'>Số điện thoại</th>";
                     read_orders_html+="<th scope='col'>Ngày mua hàng</th>";
@@ -177,12 +175,11 @@ function readOldOrdersTemplate(data, keywords){
             $.each(data.records, function(key, val) {
                         read_orders_html+="<tr valign='top'>";
                             read_orders_html+="<th scope='row'>"+ val.order_id +"</th>";
-                            read_orders_html+="<td>"+ val.customer_name +"</td>";
-                            read_orders_html+="<td style='text-align: center;'>"+ val.gender +"</td>";
+                            read_orders_html+="<td>"+ val.seller +"</td>";
+                            read_orders_html+="<td style='text-align: center;'>"+ val.customer_name +"</td>";
+                            read_orders_html+="<td style='text-align: center;'>"+ val.total_money +"</td>";
                             read_orders_html+="<td>"+ val.customer_add +"</td>";
                             read_orders_html+="<td style='text-align: center;'>"+ val.customer_phone +"</td>";
-                            read_orders_html+="<td style='text-align: center;'>"+ val.total_money +"</td>";
-                            read_orders_html+="<td style='text-align: center;'>"+ val.payment +"</td>";
                             read_orders_html+="<td style='text-align: center;'>"+ val.order_date +"</td>";
                             read_orders_html+="<td><textarea class='form-control' rows='1'>"+ val.note +"</textarea></td>";
                             if (val.status =="Bị hủy") {
@@ -219,8 +216,8 @@ function readOldOrdersTemplate(data, keywords){
                                             read_orders_html+="</div>";
                                             read_orders_html+="<div class='modal-footer'>";
                                                 read_orders_html+="<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>";
-                                                read_orders_html+="<button type='submit' data-id='"+val.order_id+"' name='submited' class='btn btn-primary update-order-button'>Xác nhận giao hàng</button>";
-                                                read_orders_html+="<button type='submit' data-id='"+val.order_id+"' name='submited' class='btn btn-danger delete-order-button'>Hủy đơn hàng</button>";
+                                                read_orders_html+="<button type='submit' data-id='"+val.order_id+"' name='oldorder' class='btn btn-primary update-order-button'>Xác nhận giao hàng</button>";
+                                                read_orders_html+="<button type='submit' data-id='"+val.order_id+"' name='deloldorder' class='btn btn-danger delete-order-button'>Hủy đơn hàng</button>";
                                             read_orders_html+="</div>";
                                         read_orders_html+="</form>";
                                     read_orders_html+="</div>";

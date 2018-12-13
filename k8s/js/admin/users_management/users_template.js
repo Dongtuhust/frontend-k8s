@@ -70,8 +70,8 @@ function readUsersTemplate(data, keywords){
                                             read_users_html+="</div>";
                                             read_users_html+="<div class='modal-footer'>";
                                                 read_users_html+="<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>";
-                                                read_users_html+="<button type='submit' data-id='"+val.user_id+"' name='submited' class='btn btn-primary update-user-button'>Block</button>";
-                                                read_users_html+="<button type='submit' data-id='"+val.user_id+"' name='submited' class='btn btn-danger delete-user-button'>Xóa</button>";
+                                                read_users_html+="<button type='submit' data-id='"+val.user_id+"' name='block-user' class='btn btn-primary update-user-button'>Block</button>";
+                                                read_users_html+="<button type='submit' data-id='"+val.user_id+"' name='del-user' class='btn btn-danger delete-user-button'>Xóa</button>";
                                             read_users_html+="</div>";
                                         read_users_html+="</form>";
                                     read_users_html+="</div>";

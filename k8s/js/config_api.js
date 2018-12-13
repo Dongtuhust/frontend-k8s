@@ -1,22 +1,23 @@
+var kong_api = "http://dongtu.ml:31486";
 function getIpProductService(){
-	return "http://35.198.247.32:32551";
+	return kong_api;
 }
 
 function getIpOldProductService(){
-	return "http://35.198.247.32:32551";
+	return kong_api;
 }
 
 function getIpPaymentService(){
-	return "http://35.198.247.32:32551";
+	return kong_api;
 }
 
 function getIpUsersService(){
-	return "http://35.198.247.32:32551";
+	return kong_api;
 }
 
 function getIp(){
-	return "http://35.198.247.32";
+	return "http://dongtu.ml";
 }
 function getIpOldPaymentService(){
-	return "http://35.198.247.32:32551/payment_oldpro_api";
+	return kong_api+"/payment_oldpro_api";
 }
