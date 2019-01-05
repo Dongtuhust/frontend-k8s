@@ -101,8 +101,7 @@ if (isset($_POST["btn_submit"])) {
 					    'token_type' => 'bearer',
 					    'expires_in' => '3600'
 					);
-					$url_token = $callApi->getKongIP();
-					$url_token .= ':31662/oauth2_tokens';
+					$url_token = 'http://dongtu.ml:31662/oauth2_tokens';
 					 
 					$options = array(
 					        'http' => array(

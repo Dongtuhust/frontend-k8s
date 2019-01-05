@@ -1,11 +1,9 @@
-
-<?php include "../includes/header.php" ?>
+<?php include "../includes/header.php";
 $email='';$usename='';$city='';$phone='';$error='';
 ?>
 <div class="sign-in">
 	<div class="row">
 		<div class="col-sm-8">
-
 			<h2>Đăng ký</h2>
 			<form action="signup.php" method="post">
 				<div id="alert" class="alert alert-danger" style="display:none"></div>
@@ -107,8 +105,7 @@ if (isset($_POST["btn_submit"])) {
 	$username = $_POST["username"];
 	$password1 = $_POST["password1"];
 	$password2 = $_POST["password2"];
-	$city = $_POST["city"];
-	$street = $_POST["street"];
+	$address = $_POST["city"];
 	$phone= $_POST["phone"];
 	$email = $_POST["email"];
 	$passAdmin = $_POST["passAdmin"];
@@ -116,10 +113,8 @@ if (isset($_POST["btn_submit"])) {
 
 	$user_item=array(
 		"username" => $username,
-		"password1" => $password1,
-		"password2" => $password2,
-		"city" => $city,
-		"street" => $street,
+		"password" => $password1,
+		"address" => $city,
 		"phone" => $phone,
 		"email" => $email,
 		"created_time" => $created_time
@@ -149,7 +144,7 @@ if (isset($_POST["btn_submit"])) {
 				curl_setopt($ch, CURLOPT_HEADER, true);
 				curl_setopt($ch, CURLOPT_HTTPHEADER,
 					array('Content-Type:application/json',
-						'Content-Length: ' . strlen($data_string))
+						'Content-Length: ' . strlen($data))
 				);
 
 				$result = curl_exec($ch);

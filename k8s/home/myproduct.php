@@ -1,6 +1,6 @@
 <?php include "../includes/header.php" ?>
 <?php
-session_start();
+// session_start();
 ?>
 <div class="container">
 	<div class="hover-effect" style="height: 50px">
@@ -25,7 +25,7 @@ session_start();
 
 // call user api
 			$product_user_api = $callApi->getApi();
-			$product_user_api .= 'old-product';
+			$product_user_api .= 'old-products';
 			$product_user_data_api = file_get_contents($product_user_api);
 			$product_user_obj = json_decode($product_user_data_api,false);
 			$i=0;
@@ -39,10 +39,10 @@ session_start();
 						<td><?=$product_user_obj->records[$key]->name?></td>
 						<td ><?=$product_user_obj->records[$key]->price?></td>
 						<td ><textarea class="form-control" rows="1"><?=$product_user_obj->records[$key]->description?></textarea></td>
-						<td style="text-align: center;"><?=$row["status"]?></td>
+						<td style="text-align: center;"><?=$product_user_obj->records[$key]->status?></td>
 						<td style="text-align: center;"><?=$product_user_obj->records[$key]->percent?></td>
-						<td ><button type="button" class="btn btn-light" data-toggle="modal" data-target="#product_user<?=$row["product_id"]?>" name="<?=$row["product_id"]?>">Sửa</button></td>
-						<div class="modal fade" id="product_user<?=$row["product_id"]?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+						<td ><button type="button" class="btn btn-light" data-toggle="modal" data-target="#product_user<?=$product_user_obj->records[$key]->id?>" name="<?=$product_user_obj->records[$key]->id?>">Sửa</button></td>
+						<div class="modal fade" id="product_user<?=$product_user_obj->records[$key]->id?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 							<div class="modal-dialog modal-dialog-centered" role="document">
 								<div class="modal-content">
 									<div class="modal-header">
@@ -53,13 +53,12 @@ session_start();
 									</div>
 									<form method="post">
 										<div class="modal-body">
-											<p>user_email : </p><input type="text" class="form-control" name="user_email" value="<?=$row["user_email"]?>" readonly>
-											<p>product_name : </p><input type="text" class="form-control" name="product_name" value="<?=$row["product_name"]?>" readonly>
-											<p>price_buy : </p><input type="text" class="form-control" name="price_buy" value="<?=$row["price_buy"]?>">
-											<p>price_rent: </p><input type="text" class="form-control" name="price_rent" value="<?=$row["price_rent"]?>">
-											<p>description : </p><input type="text" class="form-control" name="description" value="<?=$row["description"]?>">
-											<p>category : </p><input type="text" class="form-control" name="category" value="<?=$row["category"]?>">
-											<p>status : </p><input type="text" class="form-control" name="status" value="<?=$row["status"]?>">
+											<p>user_email : </p><input type="text" class="form-control" name="user_email" value="<?=$product_user_obj->records[$key]->user_mail?>" readonly>
+											<p>product_name : </p><input type="text" class="form-control" name="product_name" value="<?=$product_user_obj->records[$key]->name?>" readonly>
+											<p>price : </p><input type="text" class="form-control" name="price_buy" value="<?=$product_user_obj->records[$key]->price?>">
+											<p>description : </p><input type="text" class="form-control" name="description" value="<?=$product_user_obj->records[$key]->description?>">
+											<p>percent : </p><input type="text" class="form-control" name="percent" value="<?=$product_user_obj->records[$key]->percent?>">
+											<p>status : </p><input type="text" class="form-control" name="status" value="<?=$product_user_obj->records[$key]->status?>">
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

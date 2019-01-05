@@ -22,7 +22,7 @@ include_once '../configs/api-config.php';
 $callApi = new CallApi();
 //call product api
 $api = $callApi->getApi();
-$api .= "product/read.php";
+$api .= "old-products";
 
 $products_data_api = file_get_contents($api);
 $obj = json_decode($products_data_api,false);

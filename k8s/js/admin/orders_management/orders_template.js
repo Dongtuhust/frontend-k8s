@@ -64,7 +64,7 @@ function readOrdersTemplate(data, keywords){
                                 read_orders_html+="<div class='modal-dialog modal-dialog-centered' role='document'>";
                                     read_orders_html+="<div class='modal-content'>";
                                         read_orders_html+="<div class='modal-header'>";
-                                            read_orders_html+="<h5 class='modal-title' id='exampleModalLongTitle'>Chỉnh tiết đơn hàng";
+                                            read_orders_html+="<h5 class='modal-title' id='exampleModalLongTitle'>Chi tiết đơn hàng";
                                             read_orders_html+="<input type='text' class='form-control' name='order_id' value='"+ val.order_id +"' readonly='true'></h5>";
                                             read_orders_html+="<button type='button' class='close' data-dismiss='modal' aria-label='Close'>";
                                                 read_orders_html+="<span aria-hidden='true'>&times;</span>";

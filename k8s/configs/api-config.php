@@ -8,7 +8,7 @@
 	    }
 
 	    public function getKongIP(){
-	    	return "http://dongtu.ml";
+	    	return "dongtu.ml";
 	    }
 
     }
